@@ -12,13 +12,14 @@ var gameOverState = {
     var text = this.game.add.text(400, 100, "Game Over!", text_style);
     text.anchor.setTo(0.5, 0.5)
 
-    // Display Score
-    var score_style = { font: 'bold 60px Acme', fill: '#ffffff'};
-    var text1 = this.game.add.text(400, 300, "Score is " + score, score_style);
+    // Display Score an highest badge achieved.
+    var badge = this.getBadge();
+    var score_style = { font: 'bold 30px Acme', fill: '#ffffff'};
+    var text1 = this.game.add.text(400, 300, "Score is: " + score + "\n\nHighest Badge Achieved: " + badge, score_style);
     text1.anchor.setTo(0.5, 0.5)
 
     // Display Instructions
-    var instruction_style = { font: 'bold 80px Acme', fill: '#51A6C2'};
+    var instruction_style = { font: 'bold 40px Acme', fill: '#51A6C2'};
     var text2 = this.game.add.text(400, 500, "Press space to continue", instruction_style);
     text2.anchor.setTo(0.5, 0.5)
 
@@ -30,6 +31,27 @@ var gameOverState = {
 
   continue: function(){
     game.state.start('menu');
+  },
+
+  getBadge(){
+    if(primeCosmonaut == true){
+      return 'Prime Cosmonaut!  \nOutstanding work! You have shown excellent  \nknowledge of Prime and Composite numbers.';
+    }
+    else if(primeCommander == true){
+      return 'Prime Commander! \nFantastic work! Keep going there is still \n                   one rank to achieve.';
+    }
+    else if(primeCommandPilot == true){
+      return 'Prime Command Pilot! \nVery well done! You are really starting to grasp the \ndifference between Prime and Composite numbers. \nKeep going!';
+    }
+    else if(primePilot == true){
+      return 'Prime Pilot! \nGreat work!';
+    }
+    else if(primeSpaceCadet == true){
+      return 'Prime Space Cadet! \nGreat start! \nKeep practising and you will rank up again in no time!';
+    }
+    else{
+      return 'None... Have another go. \nYou can achieve a rank next time around!';
+    }
   }
 
 };

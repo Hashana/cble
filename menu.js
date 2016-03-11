@@ -1,6 +1,7 @@
-var learnButton;
-var playKey;
+var spaceBar;
+var enterKey;
 var background;
+
 
 var menuState = {
   create: function(){
@@ -11,9 +12,19 @@ var menuState = {
     var text = this.game.add.text(400, 100, "Planetary Primes", title_style);
     text.anchor.setTo(0.5, 0.5)
 
-    // Add menu buttons
-    learnButton = game.add.button(game.world.centerX - 50, 400, 'learnButton', this.actionOnLearnClick, this,2,1,0);
-    playButton = game.add.button(game.world.centerX - 50, 500, 'playButton', this.actionOnPlayClick, this,2,1,0);
+    // Add instructions
+    var instructions_style = { font: 'bold 40px Acme', fill: '#fff'};
+    var instructions = this.game.add.text(400, 500, "Press Space to visit the \nlearning environment or \nEnter to skip to the game!", instructions_style);
+    instructions.anchor.setTo(0.5, 0.5)
+
+      // Add menu buttons
+    enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    enterKey.onDown.add(this.playGame, this);
+
+    spaceBar  = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceBar.onDown.add(this.learnScreen, this);
+  //  learnButton = game.add.button(game.world.centerX - 50, 400, 'learnButton', this.actionOnLearnClick, this,2,1,0);
+  //  playButton = game.add.button(game.world.centerX - 50, 500, 'playButton', this.actionOnPlayClick, this,2,1,0);
   },
 
   update: function(){
@@ -21,11 +32,11 @@ var menuState = {
     background.tilePosition.y +=2;
   },
 
-  actionOnLearnClick: function(){
+  learnScreen: function(){
     game.state.start('learn');
   },
 
-  actionOnPlayClick: function(){
+  playGame: function(){
     game.state.start('play');
   }
 

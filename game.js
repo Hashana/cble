@@ -9,6 +9,9 @@ game.state.add('gameInstructions', gameInstructionsState);
 game.state.add('play', playState);
 game.state.add('learn', learnState);
 game.state.add('learn2', learn2State);
+game.state.add('learn3', learn3State);
+game.state.add('learn4', learn4State);
+game.state.add('learn5', learn5State);
 game.state.add('gameOver', gameOverState);
 game.state.add('win', winState);
 

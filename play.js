@@ -19,6 +19,12 @@ var sounds = {};
 var endKey;
 var backgroundSound;
 var numbersMissed = 0;
+var isAlive = true;
+var primeSpaceCadet = false;
+var primePilot = false;
+var primeCommandPilot = false;
+var primeCommander = false;
+var primeCosmonaut = false;
 
 var playState = {
   create: function(){
@@ -79,7 +85,7 @@ var playState = {
     allNumbers.enableBody = true;
     allNumbers.physicsBodyType = Phaser.Physics.ARCADE;
 
-    gameTimer = game.time.events.repeat(Phaser.Timer.SECOND * 2, 1000, this.dropNumber, this);
+    gameTimer = game.time.events.repeat(Phaser.Timer.SECOND * 3, 1000, this.dropNumber, this);
 
   },
 
@@ -110,12 +116,14 @@ var playState = {
       player.body.acceleration.x = 0;
 
     }
-    if(player.x < 50){
-      player.x = 50;
+    if(player.x < 30){
+      player.x = 30;
       player.body.acceleration.x = 0;
     }
 
-    // // Apply banking effect to ship movement
+
+    // removed to optimise game play controls
+    // Apply banking effect to ship movement
     // bank = player.body.velocity.x / MAXSPEED;
     // player.scale.x = 1 - Math.abs(bank) / 2;
     // player.angle = bank * 30;
@@ -127,6 +135,9 @@ var playState = {
     if(fireButton.isDown)
     this.fireBullet();
 
+    // check if awards have been achieved
+    this.updateAwards();
+    this.checkWinCondition();
 
   },
 
@@ -206,10 +217,10 @@ createComposite: function(min, max){
 dropNumber: function(){
   // create a random number, if its 5 or less create a prime
   //else create a composite number to drop
-  var chooseNumber = Math.floor(Math.random()* (10 - 1) + 1);
+  var chooseNumber = Math.floor(Math.random()* (10 - 2) + 2);
   if (chooseNumber <= 5){
     var gamePoint = this.checkGamePoint();
-    var numToDrop = this.createPrime(1,gamePoint);
+    var numToDrop = this.createPrime(2,gamePoint);
     var number = allNumbers.create(Math.floor(Math.random()* 780), - 50, 'numbers', numToDrop - 1);
     number.prime = true;
     number.value = numToDrop;
@@ -218,7 +229,7 @@ dropNumber: function(){
   }
   else{
     var gamePoint = this.checkGamePoint();
-    var numToDrop = this.createComposite(1,gamePoint);
+    var numToDrop = this.createComposite(2,gamePoint);
     var number = allNumbers.create(Math.floor(Math.random()* 780), - 50, 'numbers', numToDrop - 1);
     number.prime = false;
     number.value = numToDrop;
@@ -245,8 +256,9 @@ collectNumber: function(player, number){
       score -= parseInt(number.value);
     }
     // Remove player and number - show explosion
-    this.explosion(player, number);
+    this.explosion(player, number, number.value + ' is a prime number!');
     number.kill();
+    isAlive = false;
   }
 },
 
@@ -254,14 +266,28 @@ checkForOutOfBoundsNumbers: function(){
   allNumbers.forEach(function(number){
     if(number.body.position.y > game.world.height){
       numbersMissed ++;
-      if(numbersMissed == 3){
-        playState.messageText('You have missed 3 numbers');
+      if(numbersMissed == 3 && isAlive == true){
+          //end game - 3 numbers dropped
+            playState.explosion(player, number, 'You have missed 3 numbers!');
+            player.alive = false;
+      }
+      else if(numbersMissed < 3){
+        if(player.alive = true && isAlive == true){
+          // if player is alive and number missed remove number
+          playState.messageText('You missed a number! \nMiss 3 & your ship will explode!');
+          if(score - parseInt(number.value) < 1){
+            score = 0;
+          }
+          else if(isAlive == false){
+
+          }
+          else{
+            score -= parseInt(number.value);
+          }
+        }
+      else{
 
       }
-      else{
-        playState.messageText('You missed a number! \nMiss 3 & your ship will explode!');
-        score -= parseInt(number.value);
-
       }
       number.destroy();
     }
@@ -269,7 +295,7 @@ checkForOutOfBoundsNumbers: function(){
 
 },
 
-explosion: function(player, number){
+explosion: function(player, number, text){
 //Add sound effect
 sounds.explosionSfx.play();
 // Add explosion for death animation
@@ -278,14 +304,15 @@ explosion.anchor.setTo(0.5,0.5);
 explosion.animations.add('explode' ,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], 10 ,true);
 explosion.animations.play("explode", 10, false);
 player.kill();
-this.messageText(number.value + ' is a prime number!');
+player.alive = false;
+this.messageText(text);
 // stop music
 backgroundSound.stop();
 // Call end state
 this.gameOver();
 },
 
-actionOnNextClick: function(){
+endGame: function(){
   game.state.start('gameOver');
 },
 
@@ -302,8 +329,14 @@ findFactors: function(number){
 
 gameOver: function(){
   game.time.events.remove(gameTimer);
+  var endGame_style = { font: 'bold 60px Acme', fill: '#fff'};
+  endGametext = this.game.add.text(400, 500, "Press Enter to continue..", endGame_style);
+  endGametext.anchor.setTo(0.5, 0.5)
+  endGametext.fixedToCamera = true;
+
   // Add menu buttons
-var  nextButton = game.add.button(game.world.centerX - 50, 500, 'nextButton', this.actionOnNextClick, this,2,1,0);
+  enterKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+  enterKey.onDown.add(this.endGame, this);
 
 },
 
@@ -315,7 +348,7 @@ messageText: function(text){
   game.add.tween(instructionText).to({alpha: 0}, 2300, Phaser.Easing.Linear.None, true);
 },
 
-// check many numbers have been dropped
+// check how many numbers have been dropped
 //set max value accordingly
 checkGamePoint: function(){
   if(counter < 10){
@@ -391,8 +424,53 @@ checkNumber: function(bullet, number){
 
 },
 
+displayAwards: function(text){
+  var awards_style = { font: 'bold 30px Acme', fill: '#f00'};
+  var awardsText = this.game.add.text(300, 200, text, awards_style);
+  awardsText.anchor.setTo(0.5, 0.5)
+  awardsText.fixedToCamera = true;
+  game.add.tween(awardsText).to({alpha: 0}, 2300, Phaser.Easing.Linear.None, true);
+},
+
 updateScore: function(){
   scoreText.setText('Score: ' + score);
+},
+
+updateAwards: function(){
+  if(score >= 50 && primeSpaceCadet == false){
+    primeSpaceCadet = true;
+    this.displayAwards('Rank Up! \nPrime Space Cadet Achieved!');
+  }
+  else if(score >= 300 && primePilot == false){
+    primePilot = true;
+    this.displayAwards('Rank Up! \nPrime Pilot Achieved!');
+
+  }
+  else if(score >= 800 && primeCommandPilot == false){
+    primeCommandPilot = true;
+    this.displayAwards('Rank Up! \nPrime Command Pilot Achieved!');
+
+  }
+  else if(score >= 1500 && primeCommander == false){
+    primeCommander = true;
+    this.displayAwards('Rank Up! \nPrime Commander Achieved!');
+
+  }
+  else if(score >= 2500 && primeCosmonaut == false){
+    primeCosmonaut = true;
+    this.displayAwards('Rank Up! \nPrime Cosmonaut Achieved!');
+
+  }
+  else{
+
+  }
+
+},
+
+checkWinCondition: function(){
+  if (score > 3000){
+    game.state.start('win');
+  }
 }
 
 
