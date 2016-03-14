@@ -218,7 +218,7 @@ dropNumber: function(){
   // create a random number, if its 5 or less create a prime
   //else create a composite number to drop
   var chooseNumber = Math.floor(Math.random()* (10 - 2) + 2);
-  if (chooseNumber <= 5){
+  if (chooseNumber <= 6){
     var gamePoint = this.checkGamePoint();
     var numToDrop = this.createPrime(2,gamePoint);
     var number = allNumbers.create(Math.floor(Math.random()* 780), - 50, 'numbers', numToDrop - 1);
