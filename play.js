@@ -18,8 +18,8 @@ var counter = 0;
 var sounds = {};
 var endKey;
 var backgroundSound;
-var numbersMissed = 0;
-var isAlive = true;
+var numbersMissed;
+var isAlive;
 var primeSpaceCadet = false;
 var primePilot = false;
 var primeCommandPilot = false;
@@ -30,6 +30,7 @@ var playState = {
   create: function(){
     // Add background image as a tileSprite
     background = game.add.tileSprite(0, 0, 800, 600, 'starfield');
+    numbersMissed = 0;
 
     score = 0;
     scoreText_style = { font: 'bold 32px Acme', fill: '#fff'};
@@ -54,6 +55,7 @@ var playState = {
     // Make ships movement smoother
     player.body.maxVelocity.setTo(MAXSPEED, MAXSPEED);
     player.body.drag.setTo(DRAG, DRAG);
+    isAlive = true;
 
     // Add game controls
     cursors = game.input.keyboard.createCursorKeys();
