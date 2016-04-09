@@ -14,7 +14,7 @@ var scoreText;
 var scoreText_style;
 var allNumbers;
 var gameTimer;
-var counter = 0;
+var counter;
 var sounds = {};
 var endKey;
 var backgroundSound;
@@ -31,6 +31,7 @@ var playState = {
     // Add background image as a tileSprite
     background = game.add.tileSprite(0, 0, 800, 600, 'starfield');
     numbersMissed = 0;
+    counter = 0;
 
     score = 0;
     scoreText_style = { font: 'bold 32px Acme', fill: '#fff'};
@@ -66,9 +67,10 @@ var playState = {
     sounds.explosionSfx = game.add.audio('explosion');
     sounds.pickUpSfx = game.add.audio('pickUp');
     sounds.wrongPickupSfx = game.add.audio('wrong');
-    sounds.volume = 0.2
+    sounds.volume = 0.5
     backgroundSound = game.add.audio('music');
     backgroundSound.loop = true;
+  //  backgroundSound.volume = 1;
     backgroundSound.play('');
 
     // Add trail effect to ship
@@ -87,7 +89,9 @@ var playState = {
     allNumbers.enableBody = true;
     allNumbers.physicsBodyType = Phaser.Physics.ARCADE;
 
-    gameTimer = game.time.events.repeat(Phaser.Timer.SECOND * 3, 1000, this.dropNumber, this);
+    this.gameTimer = game.time.events.repeat(Phaser.Timer.SECOND * 3, 1000, this.dropNumber, this);
+    this.gameTimer.timer.start();
+
 
   },
 
@@ -330,7 +334,8 @@ findFactors: function(number){
 },
 
 gameOver: function(){
-  game.time.events.remove(gameTimer);
+  this.gameTimer.timer.stop(false);
+  //game.time.events.remove(gameTimer);
   var endGame_style = { font: 'bold 60px Acme', fill: '#fff'};
   endGametext = this.game.add.text(400, 500, "Press Enter to continue..", endGame_style);
   endGametext.anchor.setTo(0.5, 0.5)

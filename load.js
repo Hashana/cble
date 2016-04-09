@@ -18,7 +18,7 @@ var loadState = {
     game.load.audio('explosion', 'audio/explosion.mp3');
     game.load.audio('pickUp', 'audio/pickup3.ogg');
     game.load.audio('wrong', 'audio/lose1.ogg');
-    game.load.audio('music', 'audio/spaceCadet.ogg');
+    game.load.audio('music', 'audio/RetroMystic.ogg');
   },
 
   create: function() {
