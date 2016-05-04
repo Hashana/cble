@@ -29,7 +29,7 @@ var menuState = {
 
   update: function(){
     // Scroll background
-    background.tilePosition.y +=2;
+    background.tilePosition.y +=1;
   },
 
   learnScreen: function(){

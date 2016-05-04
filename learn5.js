@@ -8,7 +8,7 @@ var learn5State = {
 
     // Add learning materials
     var title_style = { font: 'bold 26px Acme', fill: '#fff'};
-     var text1 = this.game.add.text(400, 300, "Lesson 5.\nThe Prime numbers between 50 - 70 are: \n53,59,61,67,\n\nThe Prime numbers between 70 - 100 are:\n71,73,79,83,89,97\n\n Press Space to go to the game instructions \nor Enter to go back through the lessons ", title_style);
+     var text1 = this.game.add.text(400, 300, "More Prime Numbers.\n\nThe Prime numbers between 50 - 70 are: \n53,59,61,67,\n\nThe Prime numbers between 70 - 100 are:\n71,73,79,83,89,97\n\n Press Space to go to the game instructions \nor Enter to go back through the lessons ", title_style);
     text1.anchor.setTo(0.5, 0.5)
     text1.fixedToCamera = true;
 
@@ -22,7 +22,7 @@ var learn5State = {
   },
 
   update: function(){
-    background.tilePosition.y +=2;
+    background.tilePosition.y +=1;
   },
 
   nextScreen: function(){

@@ -8,7 +8,7 @@ var learn3State = {
 
     // Add learning materials
     var title_style = { font: 'bold 26px Acme', fill: '#fff'};
-     var text1 = this.game.add.text(400, 300, "Lesson 3.\nBeware!\nThe number 1 is not a prime number by definition \nas it has only one divisor!\n\n\nRemember:\nThe number 0 is not a prime number, it is not a positive \nnumber and has infinite number of divisors!\n\n Press Space to go to next lesson or Enter to go back ", title_style);
+     var text1 = this.game.add.text(400, 300, "Exceptions.\n\nBeware!\nThe number 1 is not a prime number by definition \nas it can only be divided by itself and not itself AND 1!\n\n\nRemember:\nZero is not a prime or composite number, as it is \nnot a positive number!\n\n Press Space to go to next lesson or Enter to go back ", title_style);
     text1.anchor.setTo(0.5, 0.5)
     text1.fixedToCamera = true;
 
@@ -23,7 +23,7 @@ var learn3State = {
   },
 
   update: function(){
-    background.tilePosition.y +=2;
+    background.tilePosition.y +=1;
   },
 
   nextScreen: function(){

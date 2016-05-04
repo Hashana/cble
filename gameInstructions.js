@@ -8,7 +8,7 @@ var gameInstructionsState = {
     background = game.add.tileSprite(0, 0, 800, 600, 'starfield');
 
     var Instructions_style = { font: 'bold 26px Acme', fill: '#fff'};
-     instructionText = this.game.add.text(400, 300, "Fly through space... \nYou must shoot the Prime numbers \nand collect the composite numbers.\n\n If you shoot a Composite number you lose \npoints! Collect a Prime and you will explode! \n\nUse the Arrow keys to move left and right \nPress space to shoot...\n\n\n Press Space to start the game \nor Enter to go back through the lessons", Instructions_style);
+     instructionText = this.game.add.text(400, 300, "Fly through space... \nYou must shoot the Prime numbers \nand collect the composite numbers with your ship.\nIf you shoot a Composite number you lose points! \nCollect a Prime and you will explode! \n\nUse the Arrow keys to move left and right \nPress space to shoot...\n\n\n Press Space to start the game \nor Enter to go back through the lessons", Instructions_style);
     instructionText.anchor.setTo(0.5, 0.5)
     instructionText.fixedToCamera = true;
 
@@ -22,7 +22,7 @@ var gameInstructionsState = {
   },
 
   update: function(){
-    background.tilePosition.y += 2;
+    background.tilePosition.y += 1;
   },
 
   playScreen: function(){

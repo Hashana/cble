@@ -5,11 +5,12 @@ var spaceBar;
 
 var learn2State = {
   create: function(){
-    background = game.add.tileSprite(0, 0, 800, 600, 'starfield');
+   background = game.add.tileSprite(0, 0, 800, 600, 'starfield');
+
 
     // Add learning materials
     var title_style = { font: 'bold 26px Acme', fill: '#fff'};
-     var text1 = this.game.add.text(400, 300, "Lesson 2.\nA natural number greater than 1 that is not a prime number \nis called a composite number. \n\nAn example of this is 4 as it can be divided by \nitself, 1 AND 2.\n\n Can you think of any others?\n\n Press Space to go to next lesson or Enter to go back ", title_style);
+     var text1 = this.game.add.text(400, 300, "What is a Composite number?\n\nA natural number greater than 1 that is not a prime number \nis called a composite number. \n\nAn example of this is 4 as it can be divided by \nitself, 1 AND 2.\n\n Can you think of any others?\n\n Press Space to go to next lesson or Enter to go back ", title_style);
     text1.anchor.setTo(0.5, 0.5)
     text1.fixedToCamera = true;
 
@@ -23,7 +24,7 @@ var learn2State = {
   },
 
   update: function(){
-    background.tilePosition.y +=2;
+    background.tilePosition.y +=1;
   },
 
   nextScreen: function(){

@@ -89,7 +89,7 @@ var playState = {
     allNumbers.enableBody = true;
     allNumbers.physicsBodyType = Phaser.Physics.ARCADE;
 
-    this.gameTimer = game.time.events.repeat(Phaser.Timer.SECOND * 3, 1000, this.dropNumber, this);
+    this.gameTimer = game.time.events.repeat(Phaser.Timer.SECOND * 4, 1000, this.dropNumber, this);
     this.gameTimer.timer.start();
 
 
@@ -97,7 +97,7 @@ var playState = {
 
   update: function(){
     // Scroll background
-    background.tilePosition.y +=2;
+    background.tilePosition.y +=1;
     //Check for collision between bullets and numbers
     game.physics.arcade.overlap(bullets, allNumbers, this.checkNumber, null, this);
     //Check for collision between bullets and numbers
@@ -221,7 +221,7 @@ createComposite: function(min, max){
 },
 
 dropNumber: function(){
-  // create a random number, if its 5 or less create a prime
+  // create a random number, if its 6 or less create a prime
   //else create a composite number to drop
   var chooseNumber = Math.floor(Math.random()* (10 - 2) + 2);
   if (chooseNumber <= 6){

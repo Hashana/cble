@@ -30,7 +30,7 @@ var gameOverState = {
   },
 
   update: function(){
-    background.tilePosition.y += 2;
+    background.tilePosition.y += 1;
   },
 
   continue: function(){

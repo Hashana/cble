@@ -8,6 +8,8 @@ var loadState = {
 
     //add images
     game.load.image('starfield', 'images/starfield.png');
+    game.load.image('spaceImage', 'images/space.jpg');
+    game.load.image('space2', 'images/space2.jpg');
     game.load.image('ship', 'images/player.png');
     game.load.image('bullet', 'images/bullet.png');
     game.load.image('nextButton', 'images/nextButton.png', 109, 24);
